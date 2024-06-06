@@ -12,7 +12,7 @@ from sklearn.metrics import max_error, mean_squared_error, mean_absolute_error, 
 SEED = 42
 
 # Importing dataset
-ZnO_data_set = pd.read_csv('Original_ZnO_dataset_2.csv')
+ZnO_data_set = pd.read_csv('ZnO_dataset.csv')
 
 # Create a separate LabelEncoder object for each categorical column
 le_synthesis_method = LabelEncoder()
@@ -36,13 +36,13 @@ train_X, test_X, train_y, test_y = train_test_split(X, y,
 
 # Instantiate Random Forest Regressor
 rf = RandomForestRegressor(
-                           n_estimators=310, # [100, 500]
-                           max_depth=10, # [1, inf)
-                           criterion='absolute_error', # 'poisson', 'friedman_mse', 'absolute_error', 'squared_error'
-                           random_state=SEED, 
-                           max_features=2, # 'sqrt', 'log2', [2, inf)
-                           min_samples_split=3, # [2, inf)
-                           bootstrap=False # [True, False]                          
+                           n_estimators=310,
+                           max_depth=10, 
+                           criterion='absolute_error',
+                           random_state=SEED,
+                           max_features=2,
+                           min_samples_split=3,
+                           bootstrap=False                           
                            )
 
 # Fit to training set
@@ -66,30 +66,29 @@ importance_df = pd.DataFrame({
 # Sort the DataFrame by importance
 importance_df = importance_df.sort_values(by='Importance', ascending=False)
 
-font = {'family': 'Calibri',
+font = {'family': 'Times New Roman',
         'weight': 'normal',
         'size': 20,
         }
 
 # Scatter plot of test_y against test predictions
-plt.scatter(test_y, pred_y, label='Data')
+plt.scatter(test_y, pred_y, s=150, edgecolor='#000000', color='#00a053', linewidths=0.6)
 m, b = np.polyfit(test_y, pred_y, 1)
-plt.plot(test_y, m*test_y + b, color='red', label='Fit')
+plt.plot(test_y, m*test_y + b, color='#febd15', linewidth=1.0)
 r2_test = r2_score(test_y, pred_y)
-plt.title(f'RF: R\u00b2 = {r2_test:.4f}', fontfamily='Calibri', fontsize=24)
+plt.title(f'RF: R\u00b2 = {r2_test:.4f}', fontfamily='Times New Roman', fontsize=24)
 plt.xlabel('Actual (nm)', fontdict=font)
 plt.ylabel('Predicted (nm)', fontdict=font)
-plt.xticks(fontfamily='Calibri', fontsize=22)
-plt.yticks(fontfamily='Calibri', fontsize=22)
-plt.legend(prop={'size': 24, 'weight': 'normal','family': 'Calibri'})
+plt.xticks(fontfamily='Times New Roman', fontsize=22)
+plt.yticks(fontfamily='Times New Roman', fontsize=22)
+plt.legend(prop={'size': 24, 'weight': 'normal','family': 'Times New Roman'})
 plt.show()
 
 # Plot feature importance
 plt.barh(importance_df['Feature'], importance_df['Importance'], color='skyblue')
-plt.xticks(fontfamily='Calibri', fontsize=22)
-plt.yticks(fontfamily='Calibri', fontsize=22)
+plt.xticks(fontfamily='Times New Roman', fontsize=22)
+plt.yticks(fontfamily='Times New Roman', fontsize=22)
 plt.xlabel('Importance', fontdict=font)
-plt.title('Feature Importance', fontfamily='Calibri', fontsize=20)
 plt.gca().invert_yaxis()
 plt.show()
 

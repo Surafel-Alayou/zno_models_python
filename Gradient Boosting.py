@@ -12,7 +12,7 @@ from sklearn.metrics import max_error, mean_squared_error, mean_absolute_error, 
 SEED = 42
 
 # Importing dataset
-ZnO_data_set = pd.read_csv('Original_ZnO_dataset_2.csv')
+ZnO_data_set = pd.read_csv('ZnO_dataset.csv')
 
 # Create a separate LabelEncoder object for each categorical column
 le_synthesis_method = LabelEncoder()
@@ -36,16 +36,17 @@ train_X, test_X, train_y, test_y = train_test_split(X, y,
 
 # Instantiate Gradient Boosting Regressor
 gbr = GradientBoostingRegressor(
-                                learning_rate=0.023, # [0.01, 0.3]
-                                n_estimators=250, # [100, inf)
-                                max_depth = 11, # [3, 10]
+                                loss='squared_error',
+                                learning_rate=0.023, 
+                                n_estimators=250, 
+                                max_depth = 11, 
                                 random_state = SEED,
-                                max_features = 4, # [1, inf)
-                                min_samples_split=9, # [2, inf)
-                                min_samples_leaf=1, # [1, inf)
-                                subsample=0.7, # (0.0, 1.0]
-                                criterion='friedman_mse', # 'friedman_mse', 'squared_error'
-                                min_impurity_decrease=0.3, # [0.0, inf)
+                                max_features = 4,
+                                min_samples_split=9, 
+                                min_samples_leaf=1,
+                                subsample=0.7, 
+                                criterion='friedman_mse', 
+                                min_impurity_decrease=0.3, 
                                 )
  
 # Fit to training set
@@ -69,30 +70,29 @@ importance_df = pd.DataFrame({
 # Sort the DataFrame by importance
 importance_df = importance_df.sort_values(by='Importance', ascending=False)
 
-font = {'family': 'Calibri',
+font = {'family': 'Times New Roman',
         'weight': 'normal',
         'size': 20,
         }
 
 # Scatter plot of test_y against test predictions
-plt.scatter(test_y, pred_y, label='Data')
+plt.scatter(test_y, pred_y, s=150, edgecolor='#000000', color='#00a053', linewidths=0.6)
 m, b = np.polyfit(test_y, pred_y, 1)
-plt.plot(test_y, m*test_y + b, color='red', label='Fit')
+plt.plot(test_y, m*test_y + b, color='#febd15', linewidth=1.0)
 r2_test = r2_score(test_y, pred_y)
-plt.title(f'GB: R\u00b2 = {r2_test:.4f}', fontfamily='Calibri', fontsize=24)
+plt.title(f'GB: R\u00b2 = {r2_test:.4f}', fontfamily='Times New Roman', fontsize=24)
 plt.xlabel('Actual (nm)', fontdict=font)
 plt.ylabel('Predicted (nm)', fontdict=font)
-plt.xticks(fontfamily='Calibri', fontsize=22)
-plt.yticks(fontfamily='Calibri', fontsize=22)
-plt.legend(prop={'size': 24, 'weight': 'normal','family': 'Calibri'})
+plt.xticks(fontfamily='Times New Roman', fontsize=22)
+plt.yticks(fontfamily='Times New Roman', fontsize=22)
+plt.legend(prop={'size': 24, 'weight': 'normal','family': 'Times New Roman'})
 plt.show()
 
 # Plot feature importance
 plt.barh(importance_df['Feature'], importance_df['Importance'], color='skyblue')
 plt.xlabel('Importance', fontdict=font)
-plt.xticks(fontfamily='Calibri', fontsize=22)
-plt.yticks(fontfamily='Calibri', fontsize=22)
-plt.title('Feature Importance', fontfamily='Calibri', fontsize=20)
+plt.xticks(fontfamily='Times New Roman', fontsize=22)
+plt.yticks(fontfamily='Times New Roman', fontsize=22)
 plt.gca().invert_yaxis()
 plt.show()
 
