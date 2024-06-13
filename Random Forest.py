@@ -36,13 +36,13 @@ train_X, test_X, train_y, test_y = train_test_split(X, y,
 
 # Instantiate Random Forest Regressor
 rf = RandomForestRegressor(
-                           n_estimators=310,
-                           max_depth=10, 
-                           criterion='absolute_error',
-                           random_state=SEED,
-                           max_features=2,
-                           min_samples_split=3,
-                           bootstrap=False                           
+                           n_estimators=310, # [100, 500]
+                           max_depth=10, # [1, inf)
+                           criterion='absolute_error', # 'poisson', 'friedman_mse', 'absolute_error', 'squared_error'
+                           random_state=SEED, 
+                           max_features=2, # 'sqrt', 'log2', [2, inf)
+                           min_samples_split=3, # [2, inf) 
+                           bootstrap=False # [True, False]                           
                            )
 
 # Fit to training set

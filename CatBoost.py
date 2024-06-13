@@ -36,13 +36,13 @@ train_X, test_X, train_y, test_y = train_test_split(X, y,
 
 # Instantiate CatBoost Regressor
 cat_regressor = CatBoostRegressor(
-                            iterations=390, 
-                            learning_rate=0.032, 
-                            depth=4, 
-                            l2_leaf_reg=1, 
-                            random_strength=1.4, 
-                            bagging_temperature=1.6, 
-                            border_count=256,
+                            iterations=390, # [1, inf)
+                            learning_rate=0.032, # [0.01, 0.2]
+                            depth=4, # [1, inf)
+                            l2_leaf_reg=1, # [1, inf)
+                            random_strength=1.4, # [0.5, 2]
+                            bagging_temperature=1.6, # [0, 2]
+                            border_count=256, # [32, 64, 128,…, inf)
                             random_seed=42
                             )
 

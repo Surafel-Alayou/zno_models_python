@@ -36,17 +36,17 @@ train_X, test_X, train_y, test_y = train_test_split(X, y,
 
 # Instantiate Gradient Boosting Regressor
 gbr = GradientBoostingRegressor(
-                                loss='squared_error',
-                                learning_rate=0.023, 
-                                n_estimators=250, 
-                                max_depth = 11, 
-                                random_state = SEED,
-                                max_features = 4,
-                                min_samples_split=9, 
-                                min_samples_leaf=1,
-                                subsample=0.7, 
-                                criterion='friedman_mse', 
-                                min_impurity_decrease=0.3, 
+                                loss='squared_error', #
+                                learning_rate=0.023, # [0.01, 0.3]
+                                n_estimators=250, # [100, inf)
+                                max_depth = 11, # [3, 10] 
+                                random_state = SEED, 
+                                max_features = 4, # [1, inf)
+                                min_samples_split=9, # [2, inf)
+                                min_samples_leaf=1, # [1, inf)
+                                subsample=0.7, # (0.0, 1.0]
+                                criterion='friedman_mse', # 'friedman_mse', 'squared_error'
+                                min_impurity_decrease=0.3, # [0.0, inf)
                                 )
  
 # Fit to training set
